@@ -1,42 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etkinlik Giriş</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    background: #f2f2f2;
+}
+h2 {
+    margin-bottom: 20px;
+}
+input {
+    width: 80%;
+    max-width: 300px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
+</style>
+</head>
 <body>
 
 <h2>Etkinlik Giriş</h2>
-
-<input id="token" placeholder="Token">
+<input id="token" placeholder="Token" type="text">
 <button onclick="login()">Giriş</button>
 
 <script>
-
 let users = [
-{token:"abc123", used:false},
-{token:"xyz456", used:false},
-{token:"test789", used:false}
+    {token:"abc123", used:false},
+    {token:"xyz456", used:false},
+    {token:"test789", used:false}
 ]
 
 function login(){
-
-let token=document.getElementById("token").value
-
-let user=users.find(u=>u.token===token)
-
-if(!user){
-alert("Token yanlış")
-return
+    let token=document.getElementById("token").value.trim()
+    let user=users.find(u=>u.token===token)
+    if(!user){
+        alert("Token yanlış")
+        return
+    }
+    if(user.used){
+        alert("Bu token zaten kullanılmış")
+        return
+    }
+    localStorage.setItem("token",token)
+    window.location="scan.html"
 }
-
-if(user.used){
-alert("Bu token zaten kullanılmış")
-return
-}
-
-localStorage.setItem("token",token)
-
-window.location="scan.html"
-
-}
-
 </script>
 
 </body>
