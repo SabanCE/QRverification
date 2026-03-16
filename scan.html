@@ -1,50 +1,70 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Etkinlik QR Okut</title>
+<script src="https://unpkg.com/html5-qrcode"></script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background: #f2f2f2;
+}
+h2 {
+    margin: 20px 0;
+}
+#reader {
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+}
+</style>
 
 <script>
-// SAYFA AÇILIR AÇILMAZ KONTROL
+// SAYFA AÇILIR AÇILMAZ TOKEN KONTROL
 const token = localStorage.getItem("token");
-
 if (!token) {
-    window.location.replace("login.html");
+    window.location.replace("index.html");
+}
+
+// Geri tuşunu engelle
+history.pushState(null, null, location.href)
+window.onpopstate = function () {
+    history.go(1)
 }
 </script>
 
-<script src="https://unpkg.com/html5-qrcode"></script>
 </head>
-
 <body>
 
 <h2>QR Okut</h2>
-<div id="reader" style="width:500px; height:400px;"></div>
+<div id="reader"></div>
 
 <script>
-
 const EVENT_QR = "EVENT2026";
 
-function onScanSuccess(decodedText) {
-
-    if(decodedText !== EVENT_QR){
+function onScanSuccess(decodedText){
+    if(decodedText!==EVENT_QR){
         alert("❌ Hatalı QR");
         return;
     }
-
     localStorage.setItem("used","true");
-
     window.location.replace("success.html");
 }
 
+// Kamera ayarları: arka kamera (environment)
 let scanner = new Html5QrcodeScanner(
-"reader",
-{fps:10, qrbox:250}
+    "reader",
+    { fps:10, qrbox:250, experimentalFeatures: { useBarCodeDetectorIfSupported: true } }
 );
 
-scanner.render(onScanSuccess);
-
+// Arka kamerayı seçmek için
+scanner.render(onScanSuccess, (error)=>{console.log(error)}, { facingMode: "environment" });
 </script>
 
 </body>
