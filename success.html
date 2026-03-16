@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h1>✅ Giriş Onaylandı</h1>
+
+<script>
+
+if(localStorage.getItem("used")!=="true"){
+location.href="index.html"
+}
+
+history.pushState(null,null,location.href)
+
+window.onpopstate=function(){
+history.go(1)
+}
+
+</script>
+
+</body>
+</html>
