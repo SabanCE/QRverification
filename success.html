@@ -1,22 +1,41 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giriş Onaylandı</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #f2f2f2;
+}
+h1 {
+    color: #4CAF50;
+    font-size: 2rem;
+}
+</style>
+</head>
 <body>
 
 <h1>✅ Giriş Onaylandı</h1>
 
 <script>
-
+// Tek giriş kontrolü
 if(localStorage.getItem("used")!=="true"){
-location.href="index.html"
+    location.href="index.html"
 }
 
+// Geri tuşunu engelle
 history.pushState(null,null,location.href)
-
 window.onpopstate=function(){
-history.go(1)
+    history.go(1)
 }
-
 </script>
 
 </body>
